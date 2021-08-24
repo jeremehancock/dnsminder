@@ -1,0 +1,5 @@
+#!/bin/bash
+
+systemctl enable --now resolvconf.service
+
+exit 0

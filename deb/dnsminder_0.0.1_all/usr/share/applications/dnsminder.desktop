@@ -1,0 +1,12 @@
+[Desktop Entry]
+Version=1.0
+Encoding=UTF-8
+Name=NDS Minder
+Comment=A graphical tool to setup CleanBrowsing or OpenDNS FamilyShield.
+Exec=dnsminder
+Icon=dnsminder.png
+Terminal=false
+Type=Application
+StartupNotify=true
+Categories=Application;System;Settings;
+Name[en_US]=DNS Minder
