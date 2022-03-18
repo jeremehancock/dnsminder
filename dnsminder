@@ -25,7 +25,7 @@ APP_TITLE="DNS Minder"
 
 check_status() {
   DNS=$(systemd-resolve --status | grep "Current DNS Server:" | awk '{print $4}')
-  if [[ $DNS == "185.228.168.168"* ]] || [[ $DNS == "185.228.169.168"* ]] || [[ $DNS == "208.67.222.123"* ]] || [[ $DNS == "208.67.220.123"* ]]
+  if [[ $DNS == "185.228.168.168"* ]] || [[ $DNS == "185.228.169.168"* ]] || [[ $DNS == "208.67.222.123"* ]] || [[ $DNS == "208.67.220.123"* ]] || [[ $DNS == "1.1.1.3"* ]] || [[ $DNS == "1.0.0.3"* ]]
     then
       echo "ON"
   else
@@ -61,6 +61,9 @@ get_provider() {
   elif [[ $PROVIDER == "208.67.222.123"* ]] || [[ $PROVIDER == "208.67.220.123"* ]]
     then
       echo "OpenDNS FamilyShield"
+  elif [[ $PROVIDER == "1.1.1.3"* ]] || [[ $PROVIDER == "1.0.0.3"* ]]
+    then
+      echo "1.1.1.1 for Families"
   else
     echo "None"
   fi
@@ -115,7 +118,7 @@ select_provider() {
   STATUS=$(check_status)
   STATUS_COLOR=$(get_status_color)
   PROVIDER=$(get_provider)
-  SELECT=$(zenity --window-icon=/usr/share/pixmaps/dnsminder.png --list --radiolist --title="$APP_TITLE: Settings" --width=400 --height=275 --text="Status: <span color='$STATUS_COLOR'><b>$STATUS</b></span>\n\nCurrent Provider: <b>$PROVIDER</b>\n\nSelect Provider" --column "" --column "" --hide-header FALSE CleanBrowsing FALSE "OpenDNS FamilyShield")
+  SELECT=$(zenity --window-icon=/usr/share/pixmaps/dnsminder.png --list --radiolist --title="$APP_TITLE: Settings" --width=400 --height=275 --text="Status: <span color='$STATUS_COLOR'><b>$STATUS</b></span>\n\nCurrent Provider: <b>$PROVIDER</b>\n\nSelect Provider" --column "" --column "" --hide-header FALSE CleanBrowsing FALSE "OpenDNS FamilyShield" FALSE "1.1.1.1 for Families")
   case $SELECT in
 
   "CleanBrowsing")
@@ -124,6 +127,10 @@ select_provider() {
 
   "OpenDNS FamilyShield")
     update_dns "OpenDNS FamilyShield"
+    ;;
+
+  "1.1.1.1 for Families")
+    update_dns "1.1.1.1 for Families"
     ;;
 
   *)
@@ -154,12 +161,18 @@ update_dns() {
   opendns1="nameserver 208.67.222.123"
   opendns2="nameserver 208.67.220.123"
 
+  cloudflare1="nameserver 1.1.1.3"
+  cloudflare2="nameserver 1.0.0.3"
+
   if [[ $1 == "CleanBrowsing" ]]
     then
       LIST="${cleanbrowsing1}$'\n'${cleanbrowsing2}"
   elif [[ $1 == "OpenDNS FamilyShield" ]]
     then
       LIST="${opendns1}$'\n'${opendns2}"
+  elif [[ $1 == "1.1.1.1 for Families" ]]
+    then
+      LIST="${cloudflare1}$'\n'${cloudflare2}"
   else
     LIST=""
   fi
