@@ -2,7 +2,7 @@
 
 <img src="https://raw.githubusercontent.com/jeremehancock/dnsminder/main/dnsminder-window.png" />
 
-This simple GUI allows you to easily set up your system's DNS to use [CleanBrowsing](https://cleanbrowsing.org), [OpenDNS FamilyShield](https://www.opendns.com/setupguide/#familyshield), or [1.1.1.1 for Families](https://blog.cloudflare.com/introducing-1-1-1-1-for-families/).
+This simple GUI allows you to easily set up your system's DNS to use [CleanBrowsing](https://cleanbrowsing.org), [OpenDNS FamilyShield](https://www.opendns.com/setupguide/#familyshield), or [1.1.1.1 for Families](https://www.opendns.com/setupguide/#familyshield).
 
 ## Installed by default on UbuntuCE:
 
