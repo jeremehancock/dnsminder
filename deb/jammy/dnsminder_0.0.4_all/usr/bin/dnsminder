@@ -1,0 +1,280 @@
+#!/bin/bash
+# Copyright (c) 2021 Jereme Hancock <support@ubuntuce.com>
+
+# MIT License
+
+# Permission is hereby granted, free of charge, to any person obtaining a copy
+# of this software and associated documentation files (the "Software"), to deal
+# in the Software without restriction, including without limitation the rights
+# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+# copies of the Software, and to permit persons to whom the Software is
+# furnished to do so, subject to the following conditions:
+
+# The above copyright notice and this permission notice shall be included in all
+# copies or substantial portions of the Software.
+
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+# SOFTWARE.
+
+# Jammy Jellyfish Release
+
+APP_TITLE="DNS Minder"
+
+check_status() {
+  DNS=$(resolvectl status | grep "Current DNS Server:" | awk '{print $4}')
+  if [[ $DNS == "185.228.168.168"* ]] || [[ $DNS == "185.228.169.168"* ]] ||
+     [[ $DNS == "208.67.222.123"* ]] || [[ $DNS == "208.67.220.123"* ]] ||
+     [[ $DNS == "1.1.1.3"* ]] || [[ $DNS == "1.0.0.3"* ]] ||
+     [[ $DNS == "94.140.14.15"* ]] || [[ $DNS == "94.140.15.16"* ]]
+    then
+      echo "ON"
+  else
+    echo "OFF"
+  fi
+}
+
+get_toggle() {
+  STATUS=$(check_status)
+  if [[ $STATUS == *"ON"* ]]
+    then
+      echo "OFF"
+  else
+    echo "ON"
+  fi
+}
+
+get_status_color() {
+  STATUS=$(check_status)
+  if [[ $STATUS == *"ON"* ]]
+    then
+      echo "#228B22"
+  else
+    echo "#CC0000"
+  fi
+}
+
+get_provider() {
+  PROVIDER=$(resolvectl status | grep "Current DNS Server:" | awk '{print $4}')
+  if [[ $PROVIDER == "185.228.168.168"* ]] || [[ $PROVIDER == "185.228.169.168"* ]]
+    then
+      echo "CleanBrowsing"
+  elif [[ $PROVIDER == "208.67.222.123"* ]] || [[ $PROVIDER == "208.67.220.123"* ]]
+    then
+      echo "OpenDNS FamilyShield"
+  elif [[ $PROVIDER == "1.1.1.3"* ]] || [[ $PROVIDER == "1.0.0.3"* ]]
+    then
+      echo "1.1.1.1 for Families"
+  elif [[ $PROVIDER == "94.140.14.15"* ]] || [[ $PROVIDER == "94.140.15.16"* ]]
+    then
+      echo "AdGuard Family DNS"
+  else
+    echo "None"
+  fi
+}
+
+settings() {
+  STATUS=$(check_status)
+  STATUS_COLOR=$(get_status_color)
+  TOGGLE=$(get_toggle)
+  PROVIDER=$(get_provider)
+
+  if [[ $STATUS == "ON" ]]
+    then
+      UPDATE="Change Provider"
+      HELP="What's DNS Minder?"
+  else
+    UPDATE="What's DNS Minder?"
+    HELP=""
+  fi
+
+  SWITCH=$(zenity --window-icon=/usr/share/pixmaps/dnsminder.png --list --title="$APP_TITLE: Settings" --width=400 --height=275 --text="Status: <span color='$STATUS_COLOR'><b>$STATUS</b></span>\n\nCurrent Provider: <b>$PROVIDER</b>\n" --column= --hide-header "Turn $TOGGLE" "$UPDATE" "$HELP")
+  case $SWITCH in
+
+  "Turn ON")
+    select_provider fresh
+    ;;
+
+  "Turn OFF")
+    revert_dns
+    ;;
+
+  "Change Provider")
+    select_provider
+    ;;
+
+  "What's DNS Minder?")
+    xdg-open "https://github.com/jeremehancock/dnsminder#readme"
+    settings
+    ;;
+
+  *)
+    exit 1
+    ;;
+  esac
+}
+
+select_provider() {
+  if [[ $1 == "fresh" ]]
+    then
+      zenity --window-icon=/usr/share/pixmaps/dnsminder.png --info --title "$APP_TITLE" --width=450 --text $"\n<big>This tool will be modifying your network settings.\n\nIt will be making changes to your system and should be USED AT YOUR OWN RISK!\n\nIt is recommended that you have system backups.</big>"
+  fi
+  STATUS=$(check_status)
+  STATUS_COLOR=$(get_status_color)
+  PROVIDER=$(get_provider)
+  SELECT=$(zenity --window-icon=/usr/share/pixmaps/dnsminder.png --list --radiolist --title="$APP_TITLE: Settings" --width=400 --height=275 --text="Status: <span color='$STATUS_COLOR'><b>$STATUS</b></span>\n\nCurrent Provider: <b>$PROVIDER</b>\n\nSelect Provider" --column "" --column "" --hide-header FALSE CleanBrowsing FALSE "OpenDNS FamilyShield" FALSE "1.1.1.1 for Families" FALSE "AdGuard Family DNS")
+  case $SELECT in
+
+  "CleanBrowsing")
+    update_dns CleanBrowsing
+    ;;
+
+  "OpenDNS FamilyShield")
+    update_dns "OpenDNS FamilyShield"
+    ;;
+
+  "1.1.1.1 for Families")
+    update_dns "1.1.1.1 for Families"
+    ;;
+
+  "AdGuard Family DNS")
+    update_dns "AdGuard Family DNS"
+    ;;
+  *)
+    settings
+    ;;
+  esac
+}
+
+confirm() {
+  if
+    zenity --window-icon=/usr/share/pixmaps/dnsminder.png --question --title "$APP_TITLE" --no-wrap --text="\nAre you sure?"
+  then
+    return
+  else
+    settings
+  fi
+}
+
+general_failure() {
+  zenity --window-icon=/usr/share/pixmaps/dnsminder.png --error --title "$APP_TITLE" --no-wrap --text="\nSomething went wrong!"
+}
+
+update_dns() {
+  confirm
+  cleanbrowsing1="nameserver 185.228.168.168"
+  cleanbrowsing2="nameserver 185.228.169.168"
+
+  opendns1="nameserver 208.67.222.123"
+  opendns2="nameserver 208.67.220.123"
+
+  cloudflare1="nameserver 1.1.1.3"
+  cloudflare2="nameserver 1.0.0.3"
+
+  adguard1="nameserver 94.140.14.15"
+  adguard2="nameserver 94.140.15.16"
+
+  if [[ $1 == "CleanBrowsing" ]]
+    then
+      LIST="${cleanbrowsing1}$'\n'${cleanbrowsing2}"
+  elif [[ $1 == "OpenDNS FamilyShield" ]]
+    then
+      LIST="${opendns1}$'\n'${opendns2}"
+  elif [[ $1 == "1.1.1.1 for Families" ]]
+    then
+      LIST="${cloudflare1}$'\n'${cloudflare2}"
+  elif [[ $1 == "AdGuard Family DNS" ]]
+    then
+      LIST="${adguard1}$'\n'${adguard2}"
+  else
+    LIST=""
+  fi
+  (
+  echo "# \nEnabling ${1}\n"
+  sleep 2
+  pkexec bash -c "
+  echo '# \nEnabling resolvconf\n'
+  sleep 2
+  systemctl enable --now resolvconf.service
+
+  echo '# \nRemoving previous entries\n'
+  sleep 2
+  sed -i '/^nameserver/d' /etc/resolvconf/resolv.conf.d/head
+
+  echo '# \nAdding new entries\n'
+  sleep 2
+  echo $LIST >> /etc/resolvconf/resolv.conf.d/head
+
+  echo '# \nRestarting network\n'
+  sleep 2
+  resolvconf -u
+  nmcli networking off
+  nmcli networking on
+
+  echo '# \nAll finished\n'
+  sleep 2
+  "
+  ) |
+    zenity --progress \
+      --title="$APP_TITLE: Progress" \
+      --width=400 \
+      --height=100 \
+      --percentage=0 \
+      --auto-close \
+      --auto-kill \
+      --no-cancel \
+      --pulsate \
+      --window-icon=/usr/share/pixmaps/dnsminder.png
+
+    (($? != 0)) && general_failure
+
+  settings
+}
+
+revert_dns() {
+  PROVIDER=$(get_provider)
+  confirm
+
+  (
+  echo "# \nDisabling ${PROVIDER}\n"
+  sleep 2
+  pkexec bash -c "
+  echo '# \nRemoving DNS entries\n'
+  sleep 2
+  sed -i '/^nameserver/d' /etc/resolvconf/resolv.conf.d/head
+  resolvconf -u
+
+  echo '# \nDisabling resolvconf\n'
+  sleep 2
+  systemctl disable --now resolvconf.service
+
+  echo '# \nRestarting network\n'
+  sleep 2
+  nmcli networking off
+  nmcli networking on
+
+  echo '# \nAll finished\n'
+  sleep 2
+  "
+  ) |
+    zenity --progress \
+      --title="$APP_TITLE: Progress" \
+      --width=400 \
+      --height=100 \
+      --percentage=0 \
+      --auto-close \
+      --auto-kill \
+      --no-cancel \
+      --pulsate \
+      --window-icon=/usr/share/pixmaps/dnsminder.png
+
+  (($? != 0)) && zenity --window-icon=/usr/share/pixmaps/dnsminder.png --error --text="Error in zenity command."
+
+  settings
+}
+
+settings fresh
