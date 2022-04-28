@@ -6,7 +6,7 @@ This simple GUI allows you to easily set up your system's DNS to use [CleanBrows
 
 ## Built for UbuntuCE:
 
-### [Check out UbuntuCE](https://ubuntuce.com/).
+### [Check out UbuntuCE](https://ubuntuce.com/)
 
 ## Disclaimer
 
