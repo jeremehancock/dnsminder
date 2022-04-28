@@ -1,66 +1,12 @@
 <h1><img src="https://raw.githubusercontent.com/jeremehancock/dnsminder/main/dnsminder.png" height="50" /> DNS Minder</h1>
 
-<img src="https://raw.githubusercontent.com/jeremehancock/dnsminder/main/dnsminder-window.png" />
+<img src="https://raw.githubusercontent.com/jeremehancock/dnsminder/main/dnsminder-job.png" />
 
-This simple GUI allows you to easily set up your system's DNS to use [CleanBrowsing](https://cleanbrowsing.org), [OpenDNS FamilyShield](https://www.opendns.com/setupguide/#familyshield), or [1.1.1.1 for Families](https://blog.cloudflare.com/introducing-1-1-1-1-for-families/).
+This simple GUI allows you to easily set up your system's DNS to use [CleanBrowsing](https://cleanbrowsing.org), [OpenDNS FamilyShield](https://www.opendns.com/setupguide/#familyshield), [1.1.1.1 for Families](https://blog.cloudflare.com/introducing-1-1-1-1-for-families/), or [AdGuard Family DNS](https://adguard-dns.io/en/public-dns.html).
 
-## Installed by default on UbuntuCE:
+## Built for UbuntuCE:
 
 ### [Check out UbuntuCE](https://ubuntuce.com/).
-
-## Install DNS Minder on Ubuntu:
-
-### Option 1:
-
-DNS Minder is available in the [UbuntuCE Repo](https://github.com/jeremehancock/repo.ubuntuce.com#readme)
-
-### Option 2:
-
-DNS Minder requires `zenity` as well as `resolvconf` which will need to be installed.
-
-In a terminal run the following.
-
-```
-sudo apt install zenity resolvconf
-```
-
-Download the latest deb package from https://github.com/jeremehancock/dnsminder/tree/main/deb.
-
-In a terminal run the following from the directory where the deb package was downloaded.
-
-```
-sudo dpkg -i dnsminder_x.x.x_all.deb
-```
-
-Replace x.x.x with the latest version.
-
-DNS Minder should now be available in your applications menu.
-
-## How to use without installing:
-
-DNS Minder requires `zenity` as well as `resolvconf` which will need to be installed and enabled.
-
-In a terminal run the following.
-
-```
-sudo apt install zenity resolvconf
-```
-
-```
-sudo systemctl enable --now resolvconf.service
-```
-
-```
-git clone https://github.com/jeremehancock/dnsminder.git
-```
-
-```
-cd dnsminder
-```
-
-```
-./dnsminder.sh
-```
 
 ## Disclaimer
 
