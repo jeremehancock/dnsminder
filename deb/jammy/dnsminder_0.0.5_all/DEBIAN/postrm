@@ -1,0 +1,9 @@
+#!/bin/bash
+
+sed -i '/^nameserver/d' /etc/resolvconf/resolv.conf.d/head
+resolvconf -u
+systemctl disable --now resolvconf.service
+nmcli networking off
+nmcli networking on
+
+exit 0
