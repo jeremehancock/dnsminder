@@ -10,5 +10,4 @@ This simple GUI allows you to easily set up your system's DNS to use [CleanBrows
 
 ## Disclaimer
 
-All code is provided as-is without any warranty. This tool will download and setup a new hosts file. It will be making
-changes to your system and should be USED AT YOUR OWN RISK!
+All code is provided as-is without any warranty.
