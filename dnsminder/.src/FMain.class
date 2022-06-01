@@ -95,12 +95,14 @@ Sub provider_check()
   
 End
 
-Sub enable(provider As String)
+Sub enable(provider As String, Optional providerTitle As String)
   
   Dim EnableProcess As Process
   
   Dim DNS1 As String
   Dim DNS2 As String
+  
+  Dim MessageString As String
   
   If provider = "CleanBrowsing" Then 
     DNS1 = "nameserver 185.228.168.168"
@@ -116,7 +118,13 @@ Sub enable(provider As String)
     DNS2 = "nameserver 94.140.15.16"
   Endif
   
-  If Message.Question("Are you sure?") = 1 Then 
+  If providerTitle Then 
+    MessageString = "\nAre you sure you want to enable " & providerTitle & "?"
+  Else 
+    MessageString = "\nAre you sure?"
+  Endif
+  
+  If Message.Question(MessageString) = 1 Then 
     ProgressBar.Show
     ProvidersPanel.Enabled = False
     EnableProcess = TerminalView.Shell("pkexec sh -c 'systemctl enable --now resolvconf.service && sed -i '/^nameserver/d' /etc/resolvconf/resolv.conf.d/head && echo " & DNS1 & " >> /etc/resolvconf/resolv.conf.d/head && echo " & DNS2 & " >> /etc/resolvconf/resolv.conf.d/head && resolvconf -u && nmcli networking off && nmcli networking on'")
@@ -139,7 +147,7 @@ Sub disable()
   
   Dim DisableProcess As Process
   
-  If Message.Question("Are you sure?") = 1 Then 
+  If Message.Question("\nAre you sure?") = 1 Then 
     ProgressBar.Show
     ProvidersPanel.Enabled = False
     DisableProcess = TerminalView.Shell("pkexec sh -c 'sed -i '/^nameserver/d' /etc/resolvconf/resolv.conf.d/head && resolvconf -u && systemctl disable --now resolvconf.service && nmcli networking off && nmcli networking on'")
@@ -172,25 +180,33 @@ End
 
 Public Sub CleanBrowsing_MouseDown()
   
-  enable("CleanBrowsing")
+  If CleanBrowsing.Value == False Then
+    enable("CleanBrowsing", "CleanBrowsing")
+  Endif
   
 End
 
 Public Sub OpenDNS_MouseDown()
   
-  enable("OpenDNS")
+  If OpenDNS.Value == False Then
+    enable("OpenDNS", "OpenDNS FamilyShield")
+  Endif
   
 End
 
 Public Sub CloudFlare_MouseDown()
   
-  enable("CloudFlare")
+  If CloudFlare.Value == False Then
+    enable("CloudFlare", "1.1.1.1. for Families")
+  Endif
   
 End
 
 Public Sub AdGuard_MouseDown()
   
-  enable("AdGuard")
+  If AdGuard.Value == False Then
+    enable("AdGuard", "AdGuard Family DNS")
+  Endif
   
 End
 

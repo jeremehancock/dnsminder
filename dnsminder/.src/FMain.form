@@ -4,12 +4,12 @@
   MoveScaled(0,0,50,48)
   Utility = True
   { CurrentProvider Label
-    MoveScaled(2,9,26,7)
+    MoveScaled(2,11,26,4)
     Font = Font["+2"]
-    Text = ("Current Provider:")
+    Text = ("Current Provider")
   }
   { ProvidersPanel Panel
-    MoveScaled(2,15,46,24)
+    MoveScaled(2,15,46,22)
     Border = Border.Plain
     { OpenDNS RadioButton
       MoveScaled(2,7,24,4)
@@ -61,7 +61,7 @@
     Text = ("Learn More")
   }
   { ProgressBar ProgressBar
-    MoveScaled(2,40,46,1)
+    MoveScaled(2,39,46,1)
     Visible = False
     Label = False
     Pulse = True
