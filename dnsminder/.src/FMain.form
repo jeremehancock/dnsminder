@@ -1,0 +1,69 @@
+# Gambas Form File 3.0
+
+{ Form Form
+  MoveScaled(0,0,50,48)
+  Utility = True
+  { CurrentProvider Label
+    MoveScaled(2,9,26,7)
+    Font = Font["+2"]
+    Text = ("Current Provider:")
+  }
+  { ProvidersPanel Panel
+    MoveScaled(2,15,46,24)
+    Border = Border.Plain
+    { OpenDNS RadioButton
+      MoveScaled(2,7,24,4)
+      Text = ("OpenDNS FamilyShield")
+    }
+    { CleanBrowsing RadioButton
+      MoveScaled(2,2,24,4)
+      Text = ("CleanBrowsing")
+      Value = True
+    }
+    { CloudFlare RadioButton
+      MoveScaled(2,12,24,4)
+      Text = ("1.1.1.1 for Families")
+    }
+    { AdGuard RadioButton
+      MoveScaled(2,17,24,4)
+      Text = ("AdGuard Family DNS")
+    }
+  }
+  { TerminalView TerminalView
+    MoveScaled(29,2,16,8)
+    Visible = False
+  }
+  { DisableButton Button
+    MoveScaled(35,42,13,4)
+    Font = Font["Bold"]
+    Background = Color.Red
+    Foreground = Color.White
+    Text = ("Turn OFF")
+  }
+  { EnableButton Button
+    MoveScaled(35,42,13,4)
+    Font = Font["Bold"]
+    Background = Color.DarkGreen
+    Foreground = Color.White
+    Text = ("Turn ON")
+  }
+  { StatusLabel Label
+    MoveScaled(2,3,11,3)
+    Font = Font["+4"]
+    Text = ("Status:")
+  }
+  { Status Label
+    MoveScaled(13,3,12,3)
+    Font = Font["+4"]
+  }
+  { LearnMore Button
+    MoveScaled(2,42,14,4)
+    Text = ("Learn More")
+  }
+  { ProgressBar ProgressBar
+    MoveScaled(2,40,46,1)
+    Visible = False
+    Label = False
+    Pulse = True
+  }
+}

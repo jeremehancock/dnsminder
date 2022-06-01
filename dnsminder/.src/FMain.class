@@ -1,0 +1,202 @@
+' Gambas class file
+
+Public Sub Form_Open()
+  
+  status_check()
+  provider_check()
+  
+End
+
+Function status_check() As Boolean
+  
+  Dim Result As String
+  
+  Result = get_provider()
+  
+  If InStr(Result, "185.228.168.168") = 1 Or If InStr(Result, "185.228.169.168") = 1 Or If InStr(Result, "208.67.222.123") = 1 Or If InStr(Result, "208.67.220.123") = 1 Or If InStr(Result, "1.1.1.3") = 1 Or If InStr(Result, "1.0.0.3") = 1 Or If InStr(Result, "94.140.14.15") = 1 Or If InStr(Result, "94.140.15.16") = 1 Then 
+    ProvidersPanel.Enabled = True
+    EnableButton.Hide
+    DisableButton.Show
+    Status.Text = "ON"
+    Status.Foreground = Color.DarkGreen
+  Else 
+    ProvidersPanel.Enabled = False
+    EnableButton.Show
+    DisableButton.Hide
+    Status.Text = "OFF"
+    Status.Foreground = Color.Red
+  Endif
+  
+End
+
+Function get_provider() As String
+  
+  Dim Result As String
+  
+  Shell ("resolvectl status | grep 'Current DNS Server:' | awk '{print $4}'") To Result
+  
+  Return Result
+  
+End
+
+Sub provider_check()
+  
+  Dim Result As String
+  
+  Result = get_provider()
+  
+  If InStr(Result, "185.228.168.168") = 1 Then 
+    CleanBrowsing.Value = True
+  Else 
+    CleanBrowsing.Value = False
+  Endif
+  
+  If InStr(Result, "185.228.169.168") = 1 Then 
+    CleanBrowsing.Value = True
+  Else 
+    CleanBrowsing.Value = False
+  Endif
+  
+  If InStr(Result, "208.67.222.123") = 1 Then 
+    OpenDNS.Value = True
+  Else 
+    OpenDNS.Value = False
+  Endif
+  
+  If InStr(Result, "208.67.220.123") = 1 Then 
+    OpenDNS.Value = True
+  Else 
+    OpenDNS.Value = False
+  Endif
+  
+  If InStr(Result, "1.1.1.3") = 1 Then 
+    CloudFlare.Value = True
+  Else 
+    CloudFlare.Value = False
+  Endif
+  
+  If InStr(Result, "1.0.0.3") = 1 Then 
+    CloudFlare.Value = True
+  Else 
+    CloudFlare.Value = False
+  Endif
+  
+  If InStr(Result, "94.140.14.15") = 1 Then 
+    AdGuard.Value = True
+  Else 
+    AdGuard.Value = False
+  Endif
+  
+  If InStr(Result, "94.140.15.16") = 1 Then 
+    AdGuard.Value = True
+  Else 
+    AdGuard.Value = False
+  Endif
+  
+End
+
+Sub enable(provider As String)
+  
+  Dim EnableProcess As Process
+  
+  Dim DNS1 As String
+  Dim DNS2 As String
+  
+  If provider = "CleanBrowsing" Then 
+    DNS1 = "nameserver 185.228.168.168"
+    DNS2 = "nameserver 185.228.169.168"
+  Else If provider = "OpenDNS" Then 
+    DNS1 = "nameserver 208.67.222.123"
+    DNS2 = "nameserver 208.67.220.123"
+  Else If provider = "CloudFlare" Then 
+    DNS1 = "nameserver 1.1.1.3"
+    DNS2 = "nameserver 1.0.0.3"
+  Else If provider = "AdGuard" Then 
+    DNS1 = "nameserver 94.140.14.15"
+    DNS2 = "nameserver 94.140.15.16"
+  Endif
+  
+  If Message.Question("Are you sure?") = 1 Then 
+    ProgressBar.Show
+    ProvidersPanel.Enabled = False
+    EnableProcess = TerminalView.Shell("pkexec sh -c 'systemctl enable --now resolvconf.service && sed -i '/^nameserver/d' /etc/resolvconf/resolv.conf.d/head && echo " & DNS1 & " >> /etc/resolvconf/resolv.conf.d/head && echo " & DNS2 & " >> /etc/resolvconf/resolv.conf.d/head && resolvconf -u && nmcli networking off && nmcli networking on'")
+    
+    Do
+      Try Wait 0.5    
+    Loop Until EnableProcess.State = 0
+    
+    EnableProcess = Null
+    
+    status_check()
+    provider_check()
+    ProgressBar.Hide
+    ProvidersPanel.Enabled = True
+    
+  Endif
+  
+End
+
+Sub disable()
+  
+  Dim DisableProcess As Process
+  
+  If Message.Question("Are you sure?") = 1 Then 
+    ProgressBar.Show
+    ProvidersPanel.Enabled = False
+    DisableProcess = TerminalView.Shell("pkexec sh -c 'sed -i '/^nameserver/d' /etc/resolvconf/resolv.conf.d/head && resolvconf -u && systemctl disable --now resolvconf.service && nmcli networking off && nmcli networking on'")
+    
+    Do
+      Try Wait 0.5    
+    Loop Until DisableProcess.State = 0
+    
+    DisableProcess = Null
+    
+    status_check()
+    provider_check()
+    ProgressBar.Hide
+    
+  Endif
+  
+End
+
+Public Sub DisableButton_Click()
+  
+  disable()
+  
+End
+
+Public Sub EnableButton_Click()
+  
+  enable("CleanBrowsing")
+  
+End
+
+Public Sub CleanBrowsing_MouseDown()
+  
+  enable("CleanBrowsing")
+  
+End
+
+Public Sub OpenDNS_MouseDown()
+  
+  enable("OpenDNS")
+  
+End
+
+Public Sub CloudFlare_MouseDown()
+  
+  enable("CloudFlare")
+  
+End
+
+Public Sub AdGuard_MouseDown()
+  
+  enable("AdGuard")
+  
+End
+
+Public Sub LearnMore_Click()
+  
+  Shell "xdg-open 'https://github.com/jeremehancock/dnsminder'"
+  
+End

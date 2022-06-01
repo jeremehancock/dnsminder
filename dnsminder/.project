@@ -1,0 +1,23 @@
+# Gambas Project File 3.0
+Title=DNS Minder
+Startup=FMain
+Version=0.0.1
+Component=gb.image
+Component=gb.gui
+Component=gb.form
+Component=gb.term
+Component=gb.form.terminal
+TabSize=2
+Translate=1
+Language=en_US
+Maintainer=Jereme Hancock
+Address=support@ubuntuce.com
+Url=ubuntuce.com
+License=General Public License
+PackageName=dnsminder-0.0.1
+Packager=1
+Systems=ubuntu
+Menus=ubuntu:"Applications/System/Administration"
+Categories=ubuntu:"System"
+Groups=ubuntu:"utils"
+ExtraFiles=ubuntu:"postinst\tDEBIAN\npostrm\tDEBIAN"
