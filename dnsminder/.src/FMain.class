@@ -130,7 +130,6 @@ Sub enable(provider As String)
     status_check()
     provider_check()
     ProgressBar.Hide
-    ProvidersPanel.Enabled = True
     
   Endif
   
