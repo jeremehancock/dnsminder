@@ -1,69 +1,108 @@
 # Gambas Form File 3.0
 
 { Form Form
-  MoveScaled(0,0,50,48)
+  MoveScaled(0,0,50,49)
   Utility = True
   { CurrentProvider Label
-    MoveScaled(2,11,26,4)
+    MoveScaled(2,12,26,4)
     Font = Font["+2"]
     Text = ("Current Provider")
   }
   { ProvidersPanel Panel
-    MoveScaled(2,15,46,22)
+    MoveScaled(2,16,46,22)
     Border = Border.Plain
-    { OpenDNS RadioButton
-      MoveScaled(2,7,24,4)
-      Text = ("OpenDNS FamilyShield")
+    { AdGuard RadioButton
+      MoveScaled(2,17,22,2.625)
+      Mouse = Mouse.Pointing
+      Text = ("AdGuard Family DNS")
     }
     { CleanBrowsing RadioButton
-      MoveScaled(2,2,24,4)
+      MoveScaled(2,2,17,2.625)
+      Mouse = Mouse.Pointing
       Text = ("CleanBrowsing")
       Value = True
     }
+    { CleanBrowsingInfo2 PictureBox
+      MoveScaled(25,7,2.625,2.625)
+      Mouse = Mouse.Pointing
+      ToolTip = ("Learn More")
+      Picture = Picture["info.png"]
+      Stretch = True
+    }
+    { CleanBrowsingInfo3 PictureBox
+      MoveScaled(22,12,2.625,2.625)
+      Mouse = Mouse.Pointing
+      ToolTip = ("Learn More")
+      Picture = Picture["info.png"]
+      Stretch = True
+    }
+    { CleanBrowsingInfo4 PictureBox
+      MoveScaled(24,17,2.625,2.625)
+      Mouse = Mouse.Pointing
+      ToolTip = ("Learn More")
+      Picture = Picture["info.png"]
+      Stretch = True
+    }
     { CloudFlare RadioButton
-      MoveScaled(2,12,24,4)
+      MoveScaled(2,12,21,2.625)
+      Mouse = Mouse.Pointing
       Text = ("1.1.1.1 for Families")
     }
-    { AdGuard RadioButton
-      MoveScaled(2,17,24,4)
-      Text = ("AdGuard Family DNS")
+    { OpenDNS RadioButton
+      MoveScaled(2,7,24,2.625)
+      Mouse = Mouse.Pointing
+      Text = ("OpenDNS FamilyShield")
+    }
+    { CleanBrowsingInfo PictureBox
+      MoveScaled(19,2,2.625,2.625)
+      Mouse = Mouse.Pointing
+      ToolTip = ("Learn More")
+      Picture = Picture["info.png"]
+      Stretch = True
     }
   }
   { TerminalView TerminalView
-    MoveScaled(29,2,16,8)
+    MoveScaled(2,1,16,3)
     Visible = False
   }
-  { DisableButton Button
-    MoveScaled(35,42,13,4)
-    Font = Font["Bold"]
-    Background = Color.Red
-    Foreground = Color.White
-    Text = ("Turn OFF")
-  }
-  { EnableButton Button
-    MoveScaled(35,42,13,4)
-    Font = Font["Bold"]
-    Background = Color.DarkGreen
-    Foreground = Color.White
-    Text = ("Turn ON")
-  }
   { StatusLabel Label
-    MoveScaled(2,3,11,3)
+    MoveScaled(2,5,11,3)
     Font = Font["+4"]
     Text = ("Status:")
   }
   { Status Label
-    MoveScaled(13,3,12,3)
+    MoveScaled(13,5,12,3)
     Font = Font["+4"]
   }
   { LearnMore Button
-    MoveScaled(2,42,14,4)
+    MoveScaled(2,43,14,4)
+    Mouse = Mouse.Pointing
     Text = ("Learn More")
   }
   { ProgressBar ProgressBar
-    MoveScaled(2,39,46,1)
+    MoveScaled(2,40,46,1)
     Visible = False
     Label = False
     Pulse = True
+  }
+  { DNSMinderLogo PictureBox
+    MoveScaled(36,2,11.875,11.875)
+    Picture = Picture["dnsminder.png"]
+    Stretch = True
+  }
+  { OnButton PictureBox
+    MoveScaled(37,42,11.75,5.75)
+    Visible = False
+    Mouse = Mouse.Pointing
+    ToolTip = ("Turn OFF")
+    Picture = Picture["on.png"]
+    Stretch = True
+  }
+  { OffButton PictureBox
+    MoveScaled(37,42,11.75,5.75)
+    Mouse = Mouse.Pointing
+    ToolTip = ("Turn ON")
+    Picture = Picture["off.png"]
+    Stretch = True
   }
 }

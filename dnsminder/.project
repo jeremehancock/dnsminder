@@ -1,12 +1,14 @@
 # Gambas Project File 3.0
 Title=DNS Minder
 Startup=FMain
+Icon=dnsminder.png
 Version=0.0.1
 Component=gb.image
 Component=gb.gui
 Component=gb.form
 Component=gb.term
 Component=gb.form.terminal
+Description="Web Content Filtering"
 TabSize=2
 Translate=1
 Language=en_US

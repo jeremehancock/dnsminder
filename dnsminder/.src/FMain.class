@@ -15,16 +15,16 @@ Function status_check() As Boolean
   
   If InStr(Result, "185.228.168.168") = 1 Or If InStr(Result, "185.228.169.168") = 1 Or If InStr(Result, "208.67.222.123") = 1 Or If InStr(Result, "208.67.220.123") = 1 Or If InStr(Result, "1.1.1.3") = 1 Or If InStr(Result, "1.0.0.3") = 1 Or If InStr(Result, "94.140.14.15") = 1 Or If InStr(Result, "94.140.15.16") = 1 Then 
     ProvidersPanel.Enabled = True
-    EnableButton.Hide
-    DisableButton.Show
     Status.Text = "ON"
     Status.Foreground = Color.DarkGreen
+    OnButton.Show
+    OffButton.Hide
   Else 
     ProvidersPanel.Enabled = False
-    EnableButton.Show
-    DisableButton.Hide
     Status.Text = "OFF"
     Status.Foreground = Color.Red
+    OnButton.Hide
+    OffButton.Show
   Endif
   
 End
@@ -127,6 +127,7 @@ Sub enable(provider As String, Optional providerTitle As String)
   If Message.Question(MessageString) = 1 Then 
     ProgressBar.Show
     ProvidersPanel.Enabled = False
+    OffButton.Enabled = False
     EnableProcess = TerminalView.Shell("pkexec sh -c 'systemctl enable --now resolvconf.service && sed -i '/^nameserver/d' /etc/resolvconf/resolv.conf.d/head && echo " & DNS1 & " >> /etc/resolvconf/resolv.conf.d/head && echo " & DNS2 & " >> /etc/resolvconf/resolv.conf.d/head && resolvconf -u && nmcli networking off && nmcli networking on'")
     
     Do
@@ -138,6 +139,7 @@ Sub enable(provider As String, Optional providerTitle As String)
     status_check()
     provider_check()
     ProgressBar.Hide
+    OnButton.Enabled = True
     
   Endif
   
@@ -150,6 +152,7 @@ Sub disable()
   If Message.Question("\nAre you sure?") = 1 Then 
     ProgressBar.Show
     ProvidersPanel.Enabled = False
+    OnButton.Enabled = False
     DisableProcess = TerminalView.Shell("pkexec sh -c 'sed -i '/^nameserver/d' /etc/resolvconf/resolv.conf.d/head && resolvconf -u && systemctl disable --now resolvconf.service && nmcli networking off && nmcli networking on'")
     
     Do
@@ -161,6 +164,7 @@ Sub disable()
     status_check()
     provider_check()
     ProgressBar.Hide
+    OffButton.Enabled = True
     
   Endif
   
@@ -213,5 +217,45 @@ End
 Public Sub LearnMore_Click()
   
   Shell "xdg-open 'https://github.com/jeremehancock/dnsminder'"
+  
+End
+
+Public Sub CleanBrowsingInfo_MouseDown()
+  
+  Shell "xdg-open 'https://cleanbrowsing.org/'"
+  
+End
+
+Public Sub CleanBrowsingInfo2_MouseDown()
+  
+  Shell "xdg-open 'https://www.opendns.com/setupguide/#familyshield'"
+  
+End
+
+Public Sub CleanBrowsingInfo3_MouseDown()
+  
+  Shell "xdg-open 'https://blog.cloudflare.com/introducing-1-1-1-1-for-families/'"
+  
+End
+
+Public Sub CleanBrowsingInfo4_MouseDown()
+  
+  Shell "xdg-open 'https://adguard-dns.io/en/public-dns.html'"
+  
+End
+
+Public Sub OffButton_MouseDown()
+  
+  enable("CleanBrowsing")
+  OnButton.Show
+  OffButton.Hide
+  
+End
+
+Public Sub OnButton_MouseDown()
+  
+  disable()
+  OffButton.Show
+  OnButton.Hide
   
 End
