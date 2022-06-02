@@ -18,6 +18,7 @@ Function status_check() As Boolean
     Status.Text = "ON"
     Status.Foreground = Color.DarkGreen
     OnButton.Show
+    OnButton.Enabled = True
     OffButton.Hide
   Else 
     ProvidersPanel.Enabled = False
@@ -25,6 +26,7 @@ Function status_check() As Boolean
     Status.Foreground = Color.Red
     OnButton.Hide
     OffButton.Show
+    OffButton.Enabled = True
   Endif
   
 End
@@ -139,7 +141,6 @@ Sub enable(provider As String, Optional providerTitle As String)
     status_check()
     provider_check()
     ProgressBar.Hide
-    OnButton.Enabled = True
     
   Endif
   
@@ -164,7 +165,6 @@ Sub disable()
     status_check()
     provider_check()
     ProgressBar.Hide
-    OffButton.Enabled = True
     
   Endif
   
@@ -247,15 +247,11 @@ End
 Public Sub OffButton_MouseDown()
   
   enable("CleanBrowsing")
-  OnButton.Show
-  OffButton.Hide
   
 End
 
 Public Sub OnButton_MouseDown()
   
   disable()
-  OffButton.Show
-  OnButton.Hide
   
 End

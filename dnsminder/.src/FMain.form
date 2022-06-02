@@ -91,7 +91,7 @@
     Stretch = True
   }
   { OnButton PictureBox
-    MoveScaled(37,42,11.75,5.75)
+    MoveScaled(36,42,11.75,5.75)
     Visible = False
     Mouse = Mouse.Pointing
     ToolTip = ("Turn OFF")
@@ -99,7 +99,7 @@
     Stretch = True
   }
   { OffButton PictureBox
-    MoveScaled(37,42,11.75,5.75)
+    MoveScaled(36,42,11.75,5.75)
     Mouse = Mouse.Pointing
     ToolTip = ("Turn ON")
     Picture = Picture["off.png"]
