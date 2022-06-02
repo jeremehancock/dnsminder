@@ -1,0 +1,9 @@
+Package: dnsminder
+Version: 0.0.8-0ubuntu1
+Architecture: all
+Maintainer: Jereme Hancock <support@ubuntuce.com>
+Installed-Size: 119
+Depends: gambas3-runtime (>= 3.16), gambas3-runtime (<< 3.99.0), gambas3-gb-image (>= 3.16), gambas3-gb-image (<< 3.99.0), gambas3-gb-form (>= 3.16), gambas3-gb-form (<< 3.99.0), gambas3-gb-term (>= 3.16), gambas3-gb-term (<< 3.99.0), gambas3-gb-form-terminal (>= 3.16), gambas3-gb-form-terminal (<< 3.99.0), gambas3-gb-gtk3-x11, gambas3-gb-gtk3-wayland, gambas3-gb-gui, gambas3-gb-jit, resolvconf
+Section: contrib/utils
+Priority: optional
+Description: Web Content Filtering

@@ -1,0 +1,4 @@
+?package(dnsminder):needs="X11" section="Applications/System/Administration"\
+title="DNS Minder"\
+command="/usr/bin/dnsminder"\
+icon="/usr/share/pixmaps/dnsminder.png"

@@ -1,0 +1,10 @@
+[Desktop Entry]
+Version=1.0
+Name=DNS Minder
+Comment=Web Content Filtering
+Exec=dnsminder
+Icon=dnsminder
+Terminal=false
+Type=Application
+StartupNotify=true
+Categories=System;
