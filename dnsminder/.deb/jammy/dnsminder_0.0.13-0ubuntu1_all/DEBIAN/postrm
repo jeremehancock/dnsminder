@@ -5,6 +5,7 @@ set -e
 if [ -x "`command -v update-menus`" ]; then update-menus ; fi
 # End automatically added section
 
+echo "postrm" $1
 if [[ $1 = "remove" ]]; then
   sed -i '/^nameserver/d' /etc/resolvconf/resolv.conf.d/head
   resolvconf -u
