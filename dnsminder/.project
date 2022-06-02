@@ -2,7 +2,7 @@
 Title=DNS Minder
 Startup=FMain
 Icon=dnsminder.png
-Version=0.0.3
+Version=0.0.7
 Component=gb.image
 Component=gb.gui
 Component=gb.form
@@ -16,7 +16,7 @@ Maintainer=Jereme Hancock
 Address=support@ubuntuce.com
 Url=ubuntuce.com
 License=General Public License
-PackageName=dnsminder-0.0.3
+PackageName=dnsminder-0.0.7
 Packager=1
 Systems=ubuntu
 Menus=ubuntu:"Applications/System/Administration"
