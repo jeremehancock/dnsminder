@@ -12,49 +12,49 @@
     MoveScaled(2,16,46,22)
     Border = Border.Plain
     { AdGuard RadioButton
-      MoveScaled(2,17,22,2.625)
+      MoveScaled(5,17,22,2.625)
       Mouse = Mouse.Pointing
       Text = ("AdGuard Family DNS")
     }
     { CleanBrowsing RadioButton
-      MoveScaled(2,2,17,2.625)
+      MoveScaled(5,2,17,2.625)
       Mouse = Mouse.Pointing
       Text = ("CleanBrowsing")
       Value = True
     }
     { CleanBrowsingInfo2 PictureBox
-      MoveScaled(25,7,2.625,2.625)
+      MoveScaled(1,7,2.625,2.625)
       Mouse = Mouse.Pointing
       ToolTip = ("Learn More")
       Picture = Picture["info.png"]
       Stretch = True
     }
     { CleanBrowsingInfo3 PictureBox
-      MoveScaled(22,12,2.625,2.625)
+      MoveScaled(1,12,2.625,2.625)
       Mouse = Mouse.Pointing
       ToolTip = ("Learn More")
       Picture = Picture["info.png"]
       Stretch = True
     }
     { CleanBrowsingInfo4 PictureBox
-      MoveScaled(24,17,2.625,2.625)
+      MoveScaled(1,17,2.625,2.625)
       Mouse = Mouse.Pointing
       ToolTip = ("Learn More")
       Picture = Picture["info.png"]
       Stretch = True
     }
     { CloudFlare RadioButton
-      MoveScaled(2,12,21,2.625)
+      MoveScaled(5,12,21,2.625)
       Mouse = Mouse.Pointing
       Text = ("1.1.1.1 for Families")
     }
     { OpenDNS RadioButton
-      MoveScaled(2,7,24,2.625)
+      MoveScaled(5,7,24,2.625)
       Mouse = Mouse.Pointing
       Text = ("OpenDNS FamilyShield")
     }
     { CleanBrowsingInfo PictureBox
-      MoveScaled(19,2,2.625,2.625)
+      MoveScaled(1,2,2.625,2.625)
       Mouse = Mouse.Pointing
       ToolTip = ("Learn More")
       Picture = Picture["info.png"]
@@ -75,14 +75,15 @@
     Font = Font["+4"]
   }
   { LearnMore Button
-    MoveScaled(2,43,14,4)
+    MoveScaled(2,42,14,4)
     Mouse = Mouse.Pointing
     Text = ("Learn More")
   }
   { ProgressBar ProgressBar
-    MoveScaled(2,40,46,1)
+    MoveScaled(-1,48,51,1)
     Visible = False
     Label = False
+    Border = False
     Pulse = True
   }
   { DNSMinderLogo PictureBox
@@ -91,7 +92,7 @@
     Stretch = True
   }
   { OnButton PictureBox
-    MoveScaled(36,42,11.75,5.75)
+    MoveScaled(36,41,11.75,5.75)
     Visible = False
     Mouse = Mouse.Pointing
     ToolTip = ("Turn OFF")
@@ -99,7 +100,7 @@
     Stretch = True
   }
   { OffButton PictureBox
-    MoveScaled(36,42,11.75,5.75)
+    MoveScaled(36,41,11.75,5.75)
     Mouse = Mouse.Pointing
     ToolTip = ("Turn ON")
     Picture = Picture["off.png"]

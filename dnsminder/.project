@@ -2,7 +2,7 @@
 Title=DNS Minder
 Startup=FMain
 Icon=dnsminder.png
-Version=0.0.7
+Version=0.0.9
 Component=gb.image
 Component=gb.gui
 Component=gb.form
@@ -23,4 +23,3 @@ Menus=ubuntu:"Applications/System/Administration"
 Categories=ubuntu:"System"
 Groups=ubuntu:"utils"
 ExtraDependencies=ubuntu:"gambas3-gb-gtk3-x11\t\t\ngambas3-gb-gtk3-wayland\t\t\ngambas3-gb-gui\t\t\ngambas3-gb-form\t\t\ngambas3-gb-jit\t\t\nresolvconf\t\t"
-ExtraFiles=ubuntu:"postinst\tDEBIAN\npostrm\tDEBIAN"
