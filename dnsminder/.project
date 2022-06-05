@@ -2,7 +2,7 @@
 Title=DNS Minder
 Startup=FMain
 Icon=dnsminder.png
-Version=0.0.9
+Version=0.0.11
 Component=gb.image
 Component=gb.gui
 Component=gb.form

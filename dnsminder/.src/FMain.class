@@ -127,7 +127,14 @@ Sub enable(provider As String, Optional providerTitle As String)
   Endif
   
   If Message.Question(MessageString) = 1 Then 
-    ProgressBar.Show
+    If providerTitle Then 
+      ProgressBar.Show
+      OffSpinner.Hide
+    Else 
+      ProgressBar.Hide
+      OffSpinner.Show
+      OffSpinner.Start
+    Endif
     ProvidersPanel.Enabled = False
     OffButton.Enabled = False
     EnableProcess = TerminalView.Shell("pkexec sh -c 'systemctl enable --now resolvconf.service && sed -i '/^nameserver/d' /etc/resolvconf/resolv.conf.d/head && echo " & DNS1 & " >> /etc/resolvconf/resolv.conf.d/head && echo " & DNS2 & " >> /etc/resolvconf/resolv.conf.d/head && resolvconf -u && nmcli networking off && nmcli networking on'")
@@ -141,6 +148,8 @@ Sub enable(provider As String, Optional providerTitle As String)
     status_check()
     provider_check()
     ProgressBar.Hide
+    OffSpinner.Stop
+    OffSpinner.Hide
     
   Endif
   
@@ -151,7 +160,8 @@ Sub disable()
   Dim DisableProcess As Process
   
   If Message.Question("\nAre you sure?") = 1 Then 
-    ProgressBar.Show
+    OnSpinner.Show
+    OnSpinner.Start
     ProvidersPanel.Enabled = False
     OnButton.Enabled = False
     DisableProcess = TerminalView.Shell("pkexec sh -c 'sed -i '/^nameserver/d' /etc/resolvconf/resolv.conf.d/head && resolvconf -u && systemctl disable --now resolvconf.service && nmcli networking off && nmcli networking on'")
@@ -164,7 +174,8 @@ Sub disable()
     
     status_check()
     provider_check()
-    ProgressBar.Hide
+    OnSpinner.Stop
+    OnSpinner.Hide
     
   Endif
   

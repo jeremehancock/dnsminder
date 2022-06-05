@@ -79,20 +79,13 @@
     Mouse = Mouse.Pointing
     Text = ("Learn More")
   }
-  { ProgressBar ProgressBar
-    MoveScaled(-1,48,51,1)
-    Visible = False
-    Label = False
-    Border = False
-    Pulse = True
-  }
   { DNSMinderLogo PictureBox
     MoveScaled(36,2,11.875,11.875)
     Picture = Picture["dnsminder.png"]
     Stretch = True
   }
   { OnButton PictureBox
-    MoveScaled(36,41,11.75,5.75)
+    MoveScaled(38,42,10,4.5)
     Visible = False
     Mouse = Mouse.Pointing
     ToolTip = ("Turn OFF")
@@ -100,10 +93,27 @@
     Stretch = True
   }
   { OffButton PictureBox
-    MoveScaled(36,41,11.75,5.75)
+    MoveScaled(38,42,10,4.5)
     Mouse = Mouse.Pointing
     ToolTip = ("Turn ON")
     Picture = Picture["off.png"]
     Stretch = True
+  }
+  { OffSpinner Spinner
+    MoveScaled(39,42.75,3,3)
+    Visible = False
+    Type = Spinner.Circle
+  }
+  { OnSpinner Spinner
+    MoveScaled(44,42.75,3,3)
+    Visible = False
+    Type = Spinner.Circle
+  }
+  { ProgressBar ProgressBar
+    MoveScaled(-1,48,51,1)
+    Visible = False
+    Label = False
+    Border = False
+    Pulse = True
   }
 }
