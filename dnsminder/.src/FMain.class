@@ -136,6 +136,7 @@ Sub enable(provider As String, Optional providerTitle As String)
       OffSpinner.Start
     Endif
     ProvidersPanel.Enabled = False
+    OnButton.Enabled = False
     OffButton.Enabled = False
     EnableProcess = TerminalView.Shell("pkexec sh -c 'systemctl enable --now resolvconf.service && sed -i '/^nameserver/d' /etc/resolvconf/resolv.conf.d/head && echo " & DNS1 & " >> /etc/resolvconf/resolv.conf.d/head && echo " & DNS2 & " >> /etc/resolvconf/resolv.conf.d/head && resolvconf -u && nmcli networking off && nmcli networking on'")
     
@@ -150,6 +151,8 @@ Sub enable(provider As String, Optional providerTitle As String)
     ProgressBar.Hide
     OffSpinner.Stop
     OffSpinner.Hide
+    OnButton.Enabled = True
+    OffButton.Enabled = True
     
   Endif
   
